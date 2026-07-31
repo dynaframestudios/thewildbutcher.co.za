@@ -105,7 +105,17 @@ const PRODUCTS = [
     price: 100,
     desc: 'Pork steak, cut fresh and trimmed to order.',
     image: 'image13.jpeg'
+  },
+  {
+    id: 'pig-rashes',
+    category: 'Pig',
+    name: 'Pork Rashes',
+    price: 60,
+    desc: 'Pork Rashes, selected fresh and tailored to your tastes.',
+    image: 'image14.jpeg'
   }
+  
+  
 ];
 
 function buildTile(product) {

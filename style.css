@@ -90,10 +90,29 @@ h1, h2, h3 { font-family: var(--font-display); }
   letter-spacing: 0.01em;
   word-break: break-word;
   color: var(--bone);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .nav-brand span {
   color: var(--ember);
+}
+
+.nav-logo {
+  height: clamp(2.25rem, 6vw, 2.75rem);
+  width: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.footer-logo {
+  height: 4.5rem;
+  width: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 0 auto 1.25rem;
+  display: block;
 }
 
 .nav-links {
