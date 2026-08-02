@@ -28,7 +28,7 @@ const PRODUCTS = [
     id: 'kudu-chuck',
     category: 'Kudu',
     name: 'Chuck',
-    price: 70,
+    price: 80,
     desc: 'Well-marbled chuck cuts, ideal for slow braising and potjies.',
     image: 'image4.jpeg'
   },
@@ -36,7 +36,7 @@ const PRODUCTS = [
     id: 'kudu-bones',
     category: 'Kudu',
     name: 'Meat with Bones',
-    price: 40,
+    price: 50,
     desc: 'Economical bone-in cuts, great for stock, soup, and hearty stews.',
     image: 'image5.jpeg'
   },
@@ -52,7 +52,7 @@ const PRODUCTS = [
     id: 'kudu-biltong',
     category: 'Kudu',
     name: 'Biltong, Chilli Bites & Dry Wors',
-    price: 300,
+    price: 299,
     desc: 'Air-dried the traditional way — whole biltong, chilli bites, or dry wors.',
     image: 'image7.jpeg'
   },
