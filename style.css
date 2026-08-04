@@ -22,6 +22,55 @@
 
   --focus-ring: 3px solid var(--ember);
   --radius: 6px;
+
+  /* Page background gradient (dark mode default) — brown-to-charcoal so
+     there's always visible depth even before/without the hero photo loads */
+  --bg-gradient: linear-gradient(160deg, #2b1608 0%, #1c0e04 45%, var(--charcoal) 100%);
+
+  /* Nav / floating-panel surfaces — these sit above the hero-style dark
+     overlay in dark mode, but need to flip to a light glass surface in
+     light mode along with the theme, unlike the hero's fixed overlay. */
+  --panel-glass-1: rgba(27, 24, 21, 0.96);
+  --panel-glass-2: rgba(37, 31, 26, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Light Mode Tokens ---------- */
+html[data-theme="light"] {
+  --charcoal: #fbf6ee;        /* page background — warm off-white */
+  --charcoal-2: #ffffff;      /* card / panel background */
+  --charcoal-3: #e4d8c3;      /* borders and hairlines on light surfaces */
+  --bone: #2a1a0d;            /* primary text on light backgrounds */
+  --bone-dim: #6b5a45;        /* secondary / muted text on light backgrounds */
+  --ember: #a6672f;           /* primary accent, deepened for contrast on white */
+  --ember-deep: #7a4a1e;
+  --brass: #8a6f3f;
+
+  --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+
+  --panel-glass-1: rgba(255, 255, 255, 0.92);
+  --panel-glass-2: rgba(248, 240, 227, 0.88);
+  --panel-border: rgba(42, 26, 13, 0.1);
+}
+
+/* Respect system preference when the user hasn't chosen manually yet */
+@media (prefers-color-scheme: light) {
+  html:not([data-theme]) {
+    --charcoal: #fbf6ee;
+    --charcoal-2: #ffffff;
+    --charcoal-3: #e4d8c3;
+    --bone: #2a1a0d;
+    --bone-dim: #6b5a45;
+    --ember: #a6672f;
+    --ember-deep: #7a4a1e;
+    --brass: #8a6f3f;
+
+    --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+
+    --panel-glass-1: rgba(255, 255, 255, 0.92);
+    --panel-glass-2: rgba(248, 240, 227, 0.88);
+    --panel-border: rgba(42, 26, 13, 0.1);
+  }
 }
 
 /* ---------- Global Reset & Base ---------- */
@@ -34,16 +83,20 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--charcoal);
+  transition: background-color 0.25s ease;
 }
 
 body {
   font-family: var(--font-body);
   background-color: var(--charcoal);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
   color: var(--bone);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0 1.5rem;
   line-height: 1.6;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -68,9 +121,9 @@ h1, h2, h3 { font-family: var(--font-display); }
   max-width: 1000px;
   margin: 1rem auto 1.5rem;
   padding: 1rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(27, 24, 21, 0.96), rgba(37, 31, 26, 0.92));
+  background: linear-gradient(135deg, var(--panel-glass-1), var(--panel-glass-2));
   backdrop-filter: blur(12px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
 }
@@ -269,7 +322,7 @@ body.nav-open {
     align-items: flex-start;
     gap: 0.2rem;
     border-left: 1px solid var(--charcoal-3);
-    background: linear-gradient(180deg, rgba(27, 24, 21, 0.98), rgba(37, 31, 26, 0.98));
+    background: linear-gradient(180deg, var(--panel-glass-1), var(--panel-glass-2));
     box-shadow: -12px 0 36px rgba(0, 0, 0, 0.35);
     transform: translateX(100%);
     transition: transform 0.25s ease;
@@ -308,10 +361,16 @@ body.nav-open {
 
 /* ---------- Hero ---------- */
 .hero {
+  /* Fixed light-on-dark palette for hero content — the overlay below is
+     always dark (photo behind it), independent of the site's light/dark
+     theme, so hero text must NOT follow the --bone/--bone-dim theme swap. */
+  --hero-text: #f2ead9;
+  --hero-text-dim: #cabfa8;
+
   padding: clamp(4rem, 10vw, 7rem) 0;
   border-bottom: 1px solid var(--charcoal-3);
   position: relative;
-  background-image: linear-gradient(180deg, rgba(23, 11, 2, 0.6), rgba(23, 11, 2, 0.88)), url('hero.jpg');
+  background-image: linear-gradient(180deg, rgba(23, 11, 2, 0.72), rgba(23, 11, 2, 0.92)), url('hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -322,7 +381,8 @@ body.nav-open {
     text-transform: uppercase;
     line-height: 0.9;
     letter-spacing: 0.01em;
-    color: var(--bone);
+    color: var(--hero-text);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
     margin-bottom: 1.75rem;
     word-break: break-word;
   }
@@ -331,13 +391,29 @@ body.nav-open {
     font-size: clamp(1rem, 2vw, 1.15rem);
     max-width: 600px;
     margin-bottom: 2.5rem;
-    color: var(--bone-dim);
+    color: var(--hero-text-dim);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   }
 
   &-actions {
     display: flex;
     gap: 1.25rem;
     flex-wrap: wrap;
+  }
+
+  .eyebrow {
+    color: var(--ember);
+  }
+
+  .btn-ghost {
+    color: var(--hero-text);
+    background-color: rgba(23, 11, 2, 0.35);
+    border-color: rgba(242, 234, 217, 0.4);
+  }
+
+  .btn-ghost:hover {
+    color: var(--ember);
+    border-color: var(--ember);
   }
 }
 
@@ -790,9 +866,9 @@ body.nav-open {
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 0.95rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(27, 24, 21, 0.96), rgba(37, 31, 26, 0.92));
+  background: linear-gradient(135deg, var(--panel-glass-1), var(--panel-glass-2));
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
@@ -934,7 +1010,7 @@ body.nav-open {
       align-items: flex-start;
       gap: 0.2rem;
       border-left: 1px solid var(--charcoal-3);
-      background: linear-gradient(180deg, rgba(27, 24, 21, 0.98), rgba(37, 31, 26, 0.98));
+      background: linear-gradient(180deg, var(--panel-glass-1), var(--panel-glass-2));
       box-shadow: -12px 0 36px rgba(0, 0, 0, 0.35);
       transform: translateX(100%);
       transition: transform 0.25s ease;
@@ -1090,14 +1166,14 @@ body.nav-open {
   font-family: var(--font-display);
   font-size: 1.15rem;
   text-transform: uppercase;
-  color: var(--bone);
+  color: #f2ead9; /* fixed — sits on a dark photo overlay in every theme */
   line-height: 1.1;
 }
 
 .tile-hint {
   display: block;
   font-size: 0.7rem;
-  color: var(--bone-dim);
+  color: #cabfa8; /* fixed — same reason as .tile-name */
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 0.2rem;
@@ -1142,7 +1218,7 @@ body.nav-open {
   bottom: 0;
   z-index: 201;
   width: min(420px, 100%);
-  background: linear-gradient(180deg, rgba(27, 24, 21, 0.99), rgba(37, 31, 26, 0.99));
+  background: var(--charcoal-2);
   border-left: 1px solid var(--charcoal-3);
   box-shadow: -12px 0 36px rgba(0, 0, 0, 0.35);
   padding: 1.5rem;
@@ -1283,6 +1359,63 @@ body.nav-open {
   .whatsapp-float svg {
     width: 26px;
     height: 26px;
+  }
+}
+
+/* ---------- Floating Theme Toggle (sits above WhatsApp button) ---------- */
+.theme-toggle {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.625rem; /* 1.25rem (wa offset) + 3.625rem (wa height) + 0.75rem (gap) */
+  z-index: 150;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--charcoal-3);
+  background-color: var(--charcoal-2);
+  color: var(--ember);
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+.theme-toggle:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* Swap which icon shows based on active theme */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+
+html[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+@media (max-width: 640px) {
+  .theme-toggle {
+    right: 1rem;
+    bottom: 5rem; /* 1rem + 3.25rem + 0.75rem, matching mobile WhatsApp sizing */
+    width: 44px;
+    height: 44px;
+  }
+
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
   }
 }
 /* ---------- Product tile images ---------- */
