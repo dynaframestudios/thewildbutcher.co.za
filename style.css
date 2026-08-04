@@ -370,7 +370,7 @@ body.nav-open {
   padding: clamp(4rem, 10vw, 7rem) 0;
   border-bottom: 1px solid var(--charcoal-3);
   position: relative;
-  background-image: linear-gradient(180deg, rgba(23, 11, 2, 0.6), rgba(23, 11, 2, 0.88)), url('hero.jpg');
+  background-image: linear-gradient(180deg, rgba(23, 11, 2, 0.72), rgba(23, 11, 2, 0.92)), url('hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -382,6 +382,7 @@ body.nav-open {
     line-height: 0.9;
     letter-spacing: 0.01em;
     color: var(--hero-text);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
     margin-bottom: 1.75rem;
     word-break: break-word;
   }
@@ -391,6 +392,7 @@ body.nav-open {
     max-width: 600px;
     margin-bottom: 2.5rem;
     color: var(--hero-text-dim);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   }
 
   &-actions {
@@ -405,7 +407,8 @@ body.nav-open {
 
   .btn-ghost {
     color: var(--hero-text);
-    border-color: rgba(242, 234, 217, 0.3);
+    background-color: rgba(23, 11, 2, 0.35);
+    border-color: rgba(242, 234, 217, 0.4);
   }
 
   .btn-ghost:hover {
