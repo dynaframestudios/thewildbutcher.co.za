@@ -7,14 +7,14 @@
 
 /* ---------- Design Tokens ---------- */
 :root {
-  --charcoal: #170b02;        /* page background — warm near-black, not pure black */
-  --charcoal-2: #251f1a;      /* card / panel background, one step lighter */
-  --charcoal-3: #322a22;      /* borders and hairlines on dark surfaces */
-  --bone: #f2ead9;            /* primary text on dark backgrounds */
-  --bone-dim: #cabfa8;        /* secondary / muted text on dark backgrounds */
-  --ember: #d0874a;           /* primary accent — the glow of the fire */
-  --ember-deep: #8a4413;      /* darker ember for hovers and depth */
-  --brass: #a68a55;           /* secondary accent — dividers, small labels */
+  --charcoal: #140700;        /* page background — deeper, richer near-black */
+  --charcoal-2: #2b180f;      /* card / panel background, clearly lifted */
+  --charcoal-3: #6a4528;      /* stronger borders and hairlines on dark surfaces */
+  --bone: #f7efe0;            /* primary text on dark backgrounds */
+  --bone-dim: #d8c7a6;        /* secondary / muted text on dark backgrounds */
+  --ember: #d97b2c;           /* primary accent — brighter ember glow */
+  --ember-deep: #9f4d13;      /* darker ember for hovers and depth */
+  --brass: #b48b4a;           /* secondary accent — dividers, small labels */
 
   --font-display: 'Anton', 'Arial Narrow', sans-serif;   /* stamped headline face */
   --font-script: 'Caveat', cursive;                       /* hand-marked chalk accent */
@@ -25,7 +25,7 @@
 
   /* Page background gradient (dark mode default) — brown-to-charcoal so
      there's always visible depth even before/without the hero photo loads */
-  --bg-gradient: linear-gradient(160deg, #2b1608 0%, #1c0e04 45%, var(--charcoal) 100%);
+  --bg-gradient: linear-gradient(160deg, #3b220d 0%, #1e0d04 45%, var(--charcoal) 100%);
 
   /* Nav / floating-panel surfaces — these sit above the hero-style dark
      overlay in dark mode, but need to flip to a light glass surface in
@@ -37,16 +37,16 @@
 
 /* ---------- Light Mode Tokens ---------- */
 html[data-theme="light"] {
-  --charcoal: #fbf6ee;        /* page background — warm off-white */
-  --charcoal-2: #ffffff;      /* card / panel background */
-  --charcoal-3: #e4d8c3;      /* borders and hairlines on light surfaces */
-  --bone: #2a1a0d;            /* primary text on light backgrounds */
-  --bone-dim: #6b5a45;        /* secondary / muted text on light backgrounds */
-  --ember: #a6672f;           /* primary accent, deepened for contrast on white */
-  --ember-deep: #7a4a1e;
-  --brass: #8a6f3f;
+  --charcoal: #fff7eb;        /* page background — warm off-white */
+  --charcoal-2: #fffdf8;      /* card / panel background */
+  --charcoal-3: #d9b487;      /* borders and hairlines on light surfaces */
+  --bone: #2b180d;            /* primary text on light backgrounds */
+  --bone-dim: #6d533e;        /* secondary / muted text on light backgrounds */
+  --ember: #a95d20;           /* primary accent, deepened for contrast on white */
+  --ember-deep: #7d4014;
+  --brass: #8d6b35;
 
-  --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+  --bg-gradient: linear-gradient(160deg, #fff8ec 0%, #f5e0bf 45%, #e7bd82 100%);
 
   --panel-glass-1: rgba(255, 255, 255, 0.92);
   --panel-glass-2: rgba(248, 240, 227, 0.88);
@@ -56,16 +56,16 @@ html[data-theme="light"] {
 /* Respect system preference when the user hasn't chosen manually yet */
 @media (prefers-color-scheme: light) {
   html:not([data-theme]) {
-    --charcoal: #fbf6ee;
-    --charcoal-2: #ffffff;
-    --charcoal-3: #e4d8c3;
-    --bone: #2a1a0d;
-    --bone-dim: #6b5a45;
-    --ember: #a6672f;
-    --ember-deep: #7a4a1e;
-    --brass: #8a6f3f;
+--charcoal: #fff7eb;
+  --charcoal-2: #fffdf8;
+  --charcoal-3: #d9b487;
+  --bone: #2b180d;
+  --bone-dim: #6d533e;
+  --ember: #a95d20;
+  --ember-deep: #7d4014;
+  --brass: #8d6b35;
 
-    --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+  --bg-gradient: linear-gradient(160deg, #fff8ec 0%, #f5e0bf 45%, #e7bd82 100%);
 
     --panel-glass-1: rgba(255, 255, 255, 0.92);
     --panel-glass-2: rgba(248, 240, 227, 0.88);
@@ -368,6 +368,7 @@ body.nav-open {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: var(--radius);
 }
 
 .hero-title {
@@ -409,6 +410,26 @@ body.nav-open {
 .hero .btn-ghost:hover {
   color: var(--ember);
   border-color: var(--ember);
+}
+
+html[data-theme="light"] .hero .btn-ghost,
+html:not([data-theme]) .hero .btn-ghost {
+  color: var(--bone);
+  background-color: rgba(255, 255, 255, 0.82);
+  border-color: rgba(42, 26, 13, 0.22);
+}
+
+html[data-theme="light"] .hero .btn-ghost:hover,
+html:not([data-theme]) .hero .btn-ghost:hover {
+  color: var(--ember);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: var(--ember);
+}
+
+html[data-theme="light"] .hero .btn-primary,
+html:not([data-theme]) .hero .btn-primary {
+  color: #fff8ef;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
 }
 
 /* Hand-marked chalk accent, used sparingly for a single word or short phrase */
@@ -457,14 +478,22 @@ body.nav-open {
   border: 2px solid transparent;
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
   user-select: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 
   &-primary {
     background-color: var(--ember);
     color: var(--charcoal);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
 
-    &:hover { background-color: #e8934c; }
+    &:hover {
+      background-color: var(--ember-deep);
+      color: #fff8ef;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+    }
 
     &:active { transform: scale(0.98); }
 
@@ -482,6 +511,7 @@ body.nav-open {
     &:hover {
       border-color: var(--ember);
       color: var(--ember);
+      background-color: rgba(217, 123, 44, 0.08);
     }
 
     &:focus-visible {
@@ -593,6 +623,7 @@ body.nav-open {
   border-radius: var(--radius);
   background-color: var(--charcoal-2);
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
   max-width: 650px;
   margin: 0 auto;
   text-align: center;
@@ -711,6 +742,7 @@ body.nav-open {
   border-radius: var(--radius);
   background-color: var(--charcoal-2);
   padding: 2rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 
   h3 {
     font-family: var(--font-display);
