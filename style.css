@@ -22,6 +22,40 @@
 
   --focus-ring: 3px solid var(--ember);
   --radius: 6px;
+
+  /* Page background gradient (dark mode default) — brown-to-charcoal so
+     there's always visible depth even before/without the hero photo loads */
+  --bg-gradient: linear-gradient(160deg, #2b1608 0%, #1c0e04 45%, var(--charcoal) 100%);
+}
+
+/* ---------- Light Mode Tokens ---------- */
+html[data-theme="light"] {
+  --charcoal: #fbf6ee;        /* page background — warm off-white */
+  --charcoal-2: #ffffff;      /* card / panel background */
+  --charcoal-3: #e4d8c3;      /* borders and hairlines on light surfaces */
+  --bone: #2a1a0d;            /* primary text on light backgrounds */
+  --bone-dim: #6b5a45;        /* secondary / muted text on light backgrounds */
+  --ember: #a6672f;           /* primary accent, deepened for contrast on white */
+  --ember-deep: #7a4a1e;
+  --brass: #8a6f3f;
+
+  --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+}
+
+/* Respect system preference when the user hasn't chosen manually yet */
+@media (prefers-color-scheme: light) {
+  html:not([data-theme]) {
+    --charcoal: #fbf6ee;
+    --charcoal-2: #ffffff;
+    --charcoal-3: #e4d8c3;
+    --bone: #2a1a0d;
+    --bone-dim: #6b5a45;
+    --ember: #a6672f;
+    --ember-deep: #7a4a1e;
+    --brass: #8a6f3f;
+
+    --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+  }
 }
 
 /* ---------- Global Reset & Base ---------- */
@@ -34,16 +68,20 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--charcoal);
+  transition: background-color 0.25s ease;
 }
 
 body {
   font-family: var(--font-body);
   background-color: var(--charcoal);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
   color: var(--bone);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0 1.5rem;
   line-height: 1.6;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -1283,6 +1321,63 @@ body.nav-open {
   .whatsapp-float svg {
     width: 26px;
     height: 26px;
+  }
+}
+
+/* ---------- Floating Theme Toggle (sits above WhatsApp button) ---------- */
+.theme-toggle {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.625rem; /* 1.25rem (wa offset) + 3.625rem (wa height) + 0.75rem (gap) */
+  z-index: 150;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--charcoal-3);
+  background-color: var(--charcoal-2);
+  color: var(--ember);
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+.theme-toggle:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* Swap which icon shows based on active theme */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+
+html[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+@media (max-width: 640px) {
+  .theme-toggle {
+    right: 1rem;
+    bottom: 5rem; /* 1rem + 3.25rem + 0.75rem, matching mobile WhatsApp sizing */
+    width: 44px;
+    height: 44px;
+  }
+
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
   }
 }
 /* ---------- Product tile images ---------- */
