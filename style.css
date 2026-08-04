@@ -26,6 +26,13 @@
   /* Page background gradient (dark mode default) — brown-to-charcoal so
      there's always visible depth even before/without the hero photo loads */
   --bg-gradient: linear-gradient(160deg, #2b1608 0%, #1c0e04 45%, var(--charcoal) 100%);
+
+  /* Nav / floating-panel surfaces — these sit above the hero-style dark
+     overlay in dark mode, but need to flip to a light glass surface in
+     light mode along with the theme, unlike the hero's fixed overlay. */
+  --panel-glass-1: rgba(27, 24, 21, 0.96);
+  --panel-glass-2: rgba(37, 31, 26, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.08);
 }
 
 /* ---------- Light Mode Tokens ---------- */
@@ -40,6 +47,10 @@ html[data-theme="light"] {
   --brass: #8a6f3f;
 
   --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+
+  --panel-glass-1: rgba(255, 255, 255, 0.92);
+  --panel-glass-2: rgba(248, 240, 227, 0.88);
+  --panel-border: rgba(42, 26, 13, 0.1);
 }
 
 /* Respect system preference when the user hasn't chosen manually yet */
@@ -55,6 +66,10 @@ html[data-theme="light"] {
     --brass: #8a6f3f;
 
     --bg-gradient: linear-gradient(160deg, #fffaf2 0%, #f4e6d2 45%, #e9c9a0 100%);
+
+    --panel-glass-1: rgba(255, 255, 255, 0.92);
+    --panel-glass-2: rgba(248, 240, 227, 0.88);
+    --panel-border: rgba(42, 26, 13, 0.1);
   }
 }
 
@@ -106,9 +121,9 @@ h1, h2, h3 { font-family: var(--font-display); }
   max-width: 1000px;
   margin: 1rem auto 1.5rem;
   padding: 1rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(27, 24, 21, 0.96), rgba(37, 31, 26, 0.92));
+  background: linear-gradient(135deg, var(--panel-glass-1), var(--panel-glass-2));
   backdrop-filter: blur(12px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
 }
@@ -307,7 +322,7 @@ body.nav-open {
     align-items: flex-start;
     gap: 0.2rem;
     border-left: 1px solid var(--charcoal-3);
-    background: linear-gradient(180deg, rgba(27, 24, 21, 0.98), rgba(37, 31, 26, 0.98));
+    background: linear-gradient(180deg, var(--panel-glass-1), var(--panel-glass-2));
     box-shadow: -12px 0 36px rgba(0, 0, 0, 0.35);
     transform: translateX(100%);
     transition: transform 0.25s ease;
@@ -346,6 +361,12 @@ body.nav-open {
 
 /* ---------- Hero ---------- */
 .hero {
+  /* Fixed light-on-dark palette for hero content — the overlay below is
+     always dark (photo behind it), independent of the site's light/dark
+     theme, so hero text must NOT follow the --bone/--bone-dim theme swap. */
+  --hero-text: #f2ead9;
+  --hero-text-dim: #cabfa8;
+
   padding: clamp(4rem, 10vw, 7rem) 0;
   border-bottom: 1px solid var(--charcoal-3);
   position: relative;
@@ -360,7 +381,7 @@ body.nav-open {
     text-transform: uppercase;
     line-height: 0.9;
     letter-spacing: 0.01em;
-    color: var(--bone);
+    color: var(--hero-text);
     margin-bottom: 1.75rem;
     word-break: break-word;
   }
@@ -369,13 +390,27 @@ body.nav-open {
     font-size: clamp(1rem, 2vw, 1.15rem);
     max-width: 600px;
     margin-bottom: 2.5rem;
-    color: var(--bone-dim);
+    color: var(--hero-text-dim);
   }
 
   &-actions {
     display: flex;
     gap: 1.25rem;
     flex-wrap: wrap;
+  }
+
+  .eyebrow {
+    color: var(--ember);
+  }
+
+  .btn-ghost {
+    color: var(--hero-text);
+    border-color: rgba(242, 234, 217, 0.3);
+  }
+
+  .btn-ghost:hover {
+    color: var(--ember);
+    border-color: var(--ember);
   }
 }
 
@@ -828,9 +863,9 @@ body.nav-open {
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 0.95rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(27, 24, 21, 0.96), rgba(37, 31, 26, 0.92));
+  background: linear-gradient(135deg, var(--panel-glass-1), var(--panel-glass-2));
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
@@ -972,7 +1007,7 @@ body.nav-open {
       align-items: flex-start;
       gap: 0.2rem;
       border-left: 1px solid var(--charcoal-3);
-      background: linear-gradient(180deg, rgba(27, 24, 21, 0.98), rgba(37, 31, 26, 0.98));
+      background: linear-gradient(180deg, var(--panel-glass-1), var(--panel-glass-2));
       box-shadow: -12px 0 36px rgba(0, 0, 0, 0.35);
       transform: translateX(100%);
       transition: transform 0.25s ease;
@@ -1128,14 +1163,14 @@ body.nav-open {
   font-family: var(--font-display);
   font-size: 1.15rem;
   text-transform: uppercase;
-  color: var(--bone);
+  color: #f2ead9; /* fixed — sits on a dark photo overlay in every theme */
   line-height: 1.1;
 }
 
 .tile-hint {
   display: block;
   font-size: 0.7rem;
-  color: var(--bone-dim);
+  color: #cabfa8; /* fixed — same reason as .tile-name */
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 0.2rem;
@@ -1180,7 +1215,7 @@ body.nav-open {
   bottom: 0;
   z-index: 201;
   width: min(420px, 100%);
-  background: linear-gradient(180deg, rgba(27, 24, 21, 0.99), rgba(37, 31, 26, 0.99));
+  background: var(--charcoal-2);
   border-left: 1px solid var(--charcoal-3);
   box-shadow: -12px 0 36px rgba(0, 0, 0, 0.35);
   padding: 1.5rem;
