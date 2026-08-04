@@ -53,6 +53,10 @@ html[data-theme="light"] {
   --panel-border: rgba(42, 26, 13, 0.1);
 }
 
+.nav-brand{
+  color: var(--bone);
+}
+
 /* Respect system preference when the user hasn't chosen manually yet */
 @media (prefers-color-scheme: light) {
   html:not([data-theme]) {
