@@ -21,3 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleWaVisibility();
   }
 });
+
+window.addEventListener('load', () => {
+  document.body.classList.add('page-loaded');
+  const loader = document.getElementById('pageLoader');
+  if (loader) {
+    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.remove();
+    }, 450);
+  }
+});
