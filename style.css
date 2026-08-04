@@ -53,10 +53,6 @@ html[data-theme="light"] {
   --panel-border: rgba(42, 26, 13, 0.1);
 }
 
-.nav-brand{
-  color: var(--bone);
-}
-
 /* Respect system preference when the user hasn't chosen manually yet */
 @media (prefers-color-scheme: light) {
   html:not([data-theme]) {
@@ -365,12 +361,6 @@ body.nav-open {
 
 /* ---------- Hero ---------- */
 .hero {
-  /* Fixed light-on-dark palette for hero content — the overlay below is
-     always dark (photo behind it), independent of the site's light/dark
-     theme, so hero text must NOT follow the --bone/--bone-dim theme swap. */
-  --hero-text: #f2ead9;
-  --hero-text-dim: #cabfa8;
-
   padding: clamp(4rem, 10vw, 7rem) 0;
   border-bottom: 1px solid var(--charcoal-3);
   position: relative;
@@ -378,47 +368,47 @@ body.nav-open {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
 
-  &-title {
-    font-family: var(--font-display);
-    font-size: clamp(3.25rem, 11vw, 6.5rem);
-    text-transform: uppercase;
-    line-height: 0.9;
-    letter-spacing: 0.01em;
-    color: var(--hero-text);
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
-    margin-bottom: 1.75rem;
-    word-break: break-word;
-  }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 11vw, 6.5rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: #f2ead9; /* fixed white/cream — never follows the theme, client requirement */
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  margin-bottom: 1.75rem;
+  word-break: break-word;
+}
 
-  &-tag {
-    font-size: clamp(1rem, 2vw, 1.15rem);
-    max-width: 600px;
-    margin-bottom: 2.5rem;
-    color: var(--hero-text-dim);
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-  }
+.hero-tag {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+  color: #cabfa8; /* fixed — same reason as .hero-title */
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
 
-  &-actions {
-    display: flex;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-  }
+.hero-actions {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
 
-  .eyebrow {
-    color: var(--ember);
-  }
+.hero .eyebrow {
+  color: var(--ember);
+}
 
-  .btn-ghost {
-    color: var(--hero-text);
-    background-color: rgba(23, 11, 2, 0.35);
-    border-color: rgba(242, 234, 217, 0.4);
-  }
+.hero .btn-ghost {
+  color: #f2ead9;
+  background-color: rgba(23, 11, 2, 0.35);
+  border-color: rgba(242, 234, 217, 0.4);
+}
 
-  .btn-ghost:hover {
-    color: var(--ember);
-    border-color: var(--ember);
-  }
+.hero .btn-ghost:hover {
+  color: var(--ember);
+  border-color: var(--ember);
 }
 
 /* Hand-marked chalk accent, used sparingly for a single word or short phrase */
